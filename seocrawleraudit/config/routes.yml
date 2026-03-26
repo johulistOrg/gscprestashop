@@ -1,0 +1,15 @@
+seocrawleraudit_index:
+  path: /seocrawleraudit
+  methods: [GET]
+  defaults:
+    _controller: 'PrestaShop\\Module\\Seocrawleraudit\\Controller\\Admin\\SeoCrawlerAuditController::indexAction'
+    _legacy_controller: AdminSeoCrawlerAudit
+    _legacy_link: AdminSeoCrawlerAudit
+
+seocrawleraudit_run:
+  path: /seocrawleraudit/run
+  methods: [POST]
+  defaults:
+    _controller: 'PrestaShop\\Module\\Seocrawleraudit\\Controller\\Admin\\SeoCrawlerAuditController::runAction'
+    _legacy_controller: AdminSeoCrawlerAudit
+    _legacy_link: AdminSeoCrawlerAudit:run
