@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    public: true
+
+  PrestaShop\Module\Seocrawleraudit\Repository\AuditResultRepository:
+    class: PrestaShop\Module\Seocrawleraudit\Repository\AuditResultRepository
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+
+  PrestaShop\Module\Seocrawleraudit\Service\SeoCrawlerService:
+    class: PrestaShop\Module\Seocrawleraudit\Service\SeoCrawlerService
+    arguments:
+      - '@prestashop.adapter.legacy.context'
+      - '@PrestaShop\Module\Seocrawleraudit\Repository\AuditResultRepository'
+
+  PrestaShop\Module\Seocrawleraudit\Controller\Admin\SeoCrawlerAuditController:
+    class: PrestaShop\Module\Seocrawleraudit\Controller\Admin\SeoCrawlerAuditController
+    parent: 'prestashop.core.controller.admin.framework_bundle_admin_controller'
+    arguments:
+      - '@PrestaShop\Module\Seocrawleraudit\Service\SeoCrawlerService'
+      - '@PrestaShop\Module\Seocrawleraudit\Repository\AuditResultRepository'

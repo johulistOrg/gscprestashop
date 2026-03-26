@@ -1,0 +1,67 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+  <div class="card">
+    <h3 class="card-header">SEO Crawler Audit</h3>
+    <div class="card-body">
+      <form method="post" action="{{ runRoute|e('html_attr') }}" class="form-inline mb-3">
+        <input type="hidden" name="token" value="{{ token|e('html_attr') }}">
+        <div class="form-group mr-2">
+          <label class="mr-2" for="thin_content_words">Thin content (minimum words)</label>
+          <input id="thin_content_words" class="form-control" type="number" min="50" name="thin_content_words" value="{{ thinContentWords|e('html_attr') }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Run audit</button>
+      </form>
+
+      <form method="get" action="{{ indexRoute|e('html_attr') }}" class="form-inline mb-3">
+        <div class="form-group mr-2">
+          <label class="mr-2" for="issue_type">Filter by issue</label>
+          <select id="issue_type" class="custom-select" name="issue_type">
+            <option value="">All issues</option>
+            {% for issueType in issueTypes %}
+              <option value="{{ issueType|e('html_attr') }}" {% if selectedIssueType == issueType %}selected{% endif %}>{{ issueType }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+      </form>
+
+      <p><strong>Total issues:</strong> {{ total }}</p>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Issue</th>
+              <th>Severity</th>
+              <th>Page type</th>
+              <th>Entity ID</th>
+              <th>URL</th>
+              <th>Details</th>
+              <th>Words</th>
+              <th>Created at</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in results %}
+              <tr>
+                <td>{{ row.id_seocrawler_audit }}</td>
+                <td>{{ row.issue_type }}</td>
+                <td>{{ row.severity }}</td>
+                <td>{{ row.page_type }}</td>
+                <td>{{ row.entity_id }}</td>
+                <td><a href="{{ row.url|e('html_attr') }}" target="_blank" rel="noopener">{{ row.url }}</a></td>
+                <td>{{ row.details }}</td>
+                <td>{{ row.word_count }}</td>
+                <td>{{ row.created_at }}</td>
+              </tr>
+            {% else %}
+              <tr><td colspan="9">No audit results yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

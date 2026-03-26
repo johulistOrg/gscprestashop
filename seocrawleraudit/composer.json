@@ -1,0 +1,10 @@
+{
+  "name": "local/seocrawleraudit",
+  "description": "PrestaShop 8 SEO crawler audit module",
+  "type": "prestashop-module",
+  "autoload": {
+    "psr-4": {
+      "PrestaShop\\Module\\Seocrawleraudit\\": "src/"
+    }
+  }
+}
